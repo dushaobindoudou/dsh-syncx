@@ -13,12 +13,12 @@
 # 仓库即使整体泄露也无法解出任何 API key；本机侧泄露与不加密时等价。
 #
 # 用法:
-#   dsh-profiles-sync export                 本机 ~/.dsh -> snapshot/（自动加密 credentials）
-#   dsh-profiles-sync diff [profile]         对比快照与本机（profile + 全局）
-#   dsh-profiles-sync restore <profile>      快照 -> profile（自动备份现状）
-#   dsh-profiles-sync restore-global         快照 -> ~/.dsh（freeroute.json + credentials 解密回写）
-#   dsh-profiles-sync links                  校验 link: 插件源码目录在本机是否存在
-#   dsh-profiles-sync status                 快照概览（加密状态、checksum）
+#   dsh-sync export                 本机 ~/.dsh -> snapshot/（自动加密 credentials）
+#   dsh-sync diff [profile]         对比快照与本机（profile + 全局）
+#   dsh-sync restore <profile>      快照 -> profile（自动备份现状）
+#   dsh-sync restore-global         快照 -> ~/.dsh（freeroute.json + credentials 解密回写）
+#   dsh-sync links                  校验 link: 插件源码目录在本机是否存在
+#   dsh-sync status                 快照概览（加密状态、checksum）
 set -euo pipefail
 
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
@@ -185,7 +185,7 @@ PY
 case "${1:-}" in
   export)         export_snapshot ;;
   diff)           diff_profile "${2:-web}" ;;
-  restore)        restore_profile "${2:?usage: dsh-profiles-sync restore <profile>}" ;;
+  restore)        restore_profile "${2:?usage: dsh-sync restore <profile>}" ;;
   restore-global) restore_global ;;
   links)          check_links ;;
   status)         status_overview ;;

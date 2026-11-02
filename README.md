@@ -28,15 +28,17 @@ dsh ships **no built-in config sync** (no sync/export/import command in the CLI)
 ```bash
 npm i -g dsh-profiles-sync
 
-dsh-profiles-sync export          # machine ~/.dsh -> snapshot/ (credentials auto-encrypted)
-dsh-profiles-sync diff web        # compare snapshot vs local (profile + global, credentials by sha256)
-dsh-profiles-sync restore web     # snapshot -> web profile (auto-backs-up current state)
-dsh-profiles-sync restore-global  # snapshot -> ~/.dsh (freeroute.json + decrypt credentials back)
-dsh-profiles-sync links           # verify link: plugin source dirs exist on this machine
-dsh-profiles-sync status          # overview (encryption state, checksum)
+dsh-sync export          # machine ~/.dsh -> snapshot/ (credentials auto-encrypted)
+dsh-sync diff web        # compare snapshot vs local (profile + global, credentials by sha256)
+dsh-sync restore web     # snapshot -> web profile (auto-backs-up current state)
+dsh-sync restore-global  # snapshot -> ~/.dsh (freeroute.json + decrypt credentials back)
+dsh-sync links           # verify link: plugin source dirs exist on this machine
+dsh-sync status          # overview (encryption state, checksum)
 ```
 
 Override targets with `DSH_HOME` and the key file with `DSH_SYNC_KEYFILE`. Requires bash + openssl (macOS/Linux).
+
+> Name note: the npm package is `dsh-profiles-sync` (the unscoped name `dsh-sync` is taken on npm by an unrelated package); the installed **command** is `dsh-sync`. The GitHub repo is `dsh-sync`.
 
 ## Cross-machine workflow
 
