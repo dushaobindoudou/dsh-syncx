@@ -1,0 +1,20 @@
+{
+  "acp": [],
+  "headless": [],
+  "web": [
+    "link:/Users/liepin/tmp/dsh-purge-inspect/dsh-purge-master",
+    "link:/Users/liepin/workspace/dsh-plugin/packages/dsh-lingxi",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-beian",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-caishui",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-fawu",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-kaigongsi",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-pinpai",
+    "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-qiye",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-acp",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-bots",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-freehub",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-freeroute",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-plugin-doctor",
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-refine"
+  ]
+}

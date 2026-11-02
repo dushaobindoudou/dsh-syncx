@@ -1,0 +1,12 @@
+# 明文凭证与加密密钥永不入仓
+snapshot/global/.credentials.yaml
+snapshot/global/.credentials.yaml.dec
+.config/dsh-profiles-sync/
+**/secret.key
+
+# 本地恢复备份
+backups/
+
+# npm
+node_modules/
+*.tgz

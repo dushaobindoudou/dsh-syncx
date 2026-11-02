@@ -1,0 +1,156 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+# dsh-acp-server: web-mounted mode - ACP rides the shared webServer port
+- id: acp-server
+  inject: [ agents, agentDefaultModel, webServer ]
+  # ACP follows the Web profile's agent-default-model unless a session
+  # selects another model explicitly.
+  config:
+    token: __REDACTED_CONTEXTUAL_TOKEN_e39eb219__
+- id: ui-settings-general
+  name: "@deepseek-ai/dsh-client-ui-settings-general"
+  config:
+    welcomeNoticeVersion: 2026-09-28.1
+- id: locale
+  name: "@deepseek-ai/dsh-client-locale"
+  config:
+    preference: zh
+- id: ui-theme
+  name: "@deepseek-ai/dsh-client-ui-theme"
+  config:
+    preference: system
+- id: llm-deepseek
+  name: "@deepseek-ai/dsh-llm-deepseek-api-key"
+  config:
+    apiKeyEnv: DEEPSEEK_API_KEY
+    baseURL: https://api.deepseek.com
+    models:
+      - id: deepseek-flash
+        name: deepseek-flash
+        contextWindow: 1000000
+        inputModalities:
+          - text
+          - image
+        systemPromptUpdate: in-history
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      vol:
+        displayName: 火山
+        apiKeyEnv: VOL_API_KEY
+        api: openai-responses
+        baseURL: https://ark.cn-beijing.volces.com/api/coding/v3
+        defaultInput:
+          - text
+          - image
+        models:
+          - id: deepseek-v4-pro
+            name: deepseek-v4-pro
+          - id: deepseek-v4-1-flash
+            name: deepseek-v4-1-flash
+          - id: glm-5-3
+            name: glm-5-3
+          - id: glm-5-3-flash
+            name: glm-5-3-flash
+      liepin:
+        apiKeyEnv: LIEPIN_API_KEY
+        api: openai-completions
+        baseURL: https://openai.tongdaoren.cn/v1
+        defaultInput:
+          - text
+          - image
+        models:
+          - id: glm-5-3
+            name: glm-5-3
+          - id: glm-5-3-flash
+            name: glm-5-3-flash
+      liepin-aiproxy:
+        displayName: liepin-aiproxy
+        apiKeyEnv: LIEPIN_AIPROXY_API_KEY
+        api: openai-completions
+        baseURL: http://open-techarea.tongdao.cn/aiproxyhub/raw/v1
+        models:
+          - id: baidu/deepseek-v4-flash-0731
+            name: baidu/deepseek-v4-flash
+      opencode:
+        displayName: OpenCode Zen
+        apiKeyEnv: OPENCODE_API_KEY
+        api: openai-completions
+        baseURL: https://opencode.ai/zen/v1
+        models:
+          - id: x-preview-f-free
+            name: x-preview-f-free
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: vol
+    model: glm-5-3-flash
+- id: permission
+  name: "@deepseek-ai/dsh-permission-presets"
+  config:
+    presets:
+      read-only:
+        sandbox: read-only
+        approval: ask
+      workspace-write:
+        sandbox: workspace-write
+        approval: ask
+      danger-full-access:
+        sandbox: danger-full-access
+        approval: never
+    defaultPreset: danger-full-access
+- id: agent-preset-registry
+  name: "@deepseek-ai/dsh-agent-preset-registry"
+  config:
+    default: standard
+    selectedDefault: cordis
+- id: session-log-deepseek
+  name: "@deepseek-ai/dsh-session-log-deepseek"
+  config:
+    enabled: false
+- id: plugin-security
+  disabled: false
+
+# dsh-recovery (npm, formerly dsh-selfrepair): adds /doctor, which diagnoses and repairs duplicated
+# profile modules and unusable model config. See ~/workspace/dsh-plugin-doctor.
+# 不再在此 insert `plugin-selfrepair`：dsh-recovery 已作为 bundle 进入
+# package.json 的 dsh.profile.bundles，其自带 cordis.patch.yml 已挂载该插件；
+# 此处再 insert 会与 bundle 层重复（duplicate loader entry id: plugin-selfrepair）。
+# dsh-plugin-wfx: Workflow Studio 工作流面板 —— 用户要求移除（2026-08-27）。
+# 如需恢复，重新加入：
+#   - insert:
+#       - id: workflow-studio
+#         name: dsh-plugin-wfx
+
+# Hyperliquid testnet acceptance wallet. The signing key stays encrypted in
+# this dedicated dsh-web3 vault; its passphrase is in macOS Keychain.
+- id: web3
+  config:
+    vaultPath: /Users/liepin/.dsh-hyperliquid-test-web3
+    secretStore: keychain
+    passphrase:
+      mode: auto
+- id: hyperliquid
+  config:
+    dataDir: ~/.dsh-hyperliquid
+    network: testnet
+    tradingMode: live
+    signer: web3
+    web3Account: 563b6999-408c-41be-8fd2-8c8b884b946e
+    tradingAddress: "0xF5D7710aC1bBDc51fB32Dfa67fC5D0f22CD9636C"
+    autonomousLive: false
+    # 2026-10-20 用户指令：缠论策略自动交易——15m 收盘轮可带止损开仓/只减仓
+    # （插件硬闸：仅 testnet + live + 全托管 + stopLossPx>0 或 reduceOnly 时放行；主网自动轮始终禁止）
+    agentAutoTradeTestnet: true
+
+- insert:
+    - id: dsh-purge
+      name: dsh-purge
+      inject: [systemPrompt, tools]
+      config:
+        enabled: true
+        stripMnemon: true
+        capabilityProtocol: true
+        hooksDenyBypass: true

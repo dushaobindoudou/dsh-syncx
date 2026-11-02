@@ -1,0 +1,70 @@
+{
+  "name": "dsh-profile-web",
+  "private": true,
+  "dependencies": {
+    "dsh-acp-server": "link:/Users/liepin/workspace/dsh-workspace/dsh-acp",
+    "dsh-beian": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-beian",
+    "dsh-bots": "link:/Users/liepin/workspace/dsh-workspace/dsh-bots",
+    "dsh-caishui": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-caishui",
+    "dsh-fawu": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-fawu",
+    "dsh-freehub": "link:/Users/liepin/workspace/dsh-workspace/dsh-freehub",
+    "dsh-freeroute": "link:/Users/liepin/workspace/dsh-workspace/dsh-freeroute",
+    "dsh-hyperliquid": "0.8.1",
+    "dsh-kaigongsi": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-kaigongsi",
+    "dsh-lingxi": "link:/Users/liepin/workspace/dsh-plugin/packages/dsh-lingxi",
+    "dsh-pinpai": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-pinpai",
+    "dsh-plugin-security": "0.5.0",
+    "dsh-purge": "link:/Users/liepin/tmp/dsh-purge-inspect/dsh-purge-master",
+    "dsh-qiye": "link:/Users/liepin/workspace/dsh-qiye/packages/dsh-qiye",
+    "dsh-recovery": "link:/Users/liepin/workspace/dsh-workspace/dsh-plugin-doctor",
+    "dsh-refine": "link:/Users/liepin/workspace/dsh-workspace/dsh-refine",
+    "dsh-web3": "^0.10.1"
+  },
+  "dsh": {
+    "profile": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-acp-server",
+        "dsh-freeroute",
+        "dsh-refine",
+        "dsh-bots",
+        "dsh-recovery",
+        "dsh-lingxi",
+        "dsh-plugin-security",
+        "dsh-freehub",
+        "dsh-web3",
+        "dsh-hyperliquid",
+        "dsh-purge",
+        "dsh-beian",
+        "dsh-caishui",
+        "dsh-kaigongsi",
+        "dsh-pinpai",
+        "dsh-qiye",
+        "dsh-fawu"
+      ]
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "@deepseek-ai/dsh-agent": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-agent",
+      "@deepseek-ai/dsh-api-settings-controller": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-settings-controller",
+      "@deepseek-ai/dsh-api-workspace-controller": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-workspace-controller",
+      "@deepseek-ai/dsh-api-workspace-files": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-workspace-files",
+      "@deepseek-ai/dsh-attachment": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-attachment",
+      "@deepseek-ai/dsh-brand": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-brand",
+      "@deepseek-ai/dsh-cmdline": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-cmdline",
+      "@deepseek-ai/dsh-host-directory-picker-browse": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-directory-picker-browse",
+      "@deepseek-ai/dsh-llm": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-llm",
+      "@deepseek-ai/dsh-scope": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-scope",
+      "@deepseek-ai/dsh-session": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-session",
+      "@deepseek-ai/dsh-session-query": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-session-query",
+      "@deepseek-ai/dsh-system-prompt": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-system-prompt",
+      "@deepseek-ai/dsh-timeout": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-timeout",
+      "@deepseek-ai/dsh-typert-protocol": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-typert-protocol",
+      "@deepseek-ai/dsh-util-crypto": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-util-crypto",
+      "@deepseek-ai/dsh-util-values": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-util-values",
+      "@deepseek-ai/dsh-workspace": "link:/Users/liepin/.local/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-workspace"
+    }
+  }
+}

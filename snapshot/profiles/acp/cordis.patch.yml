@@ -1,0 +1,12 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+# Pin the ACP profile to the same default declared in ~/.dsh/settings.yaml
+# (agent-default-model: liepin/glm-5-3-flash). Without this the profile falls
+# back to dsh-base's deepseek-official/deepseek-v4-flash, whose key is
+# rejected here, so every ACP turn failed with a 401.
+- id: agent-default-model
+  config:
+    provider: liepin
+    model: glm-5-3-flash
+

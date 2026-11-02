@@ -1,0 +1,15 @@
+{
+  "name": "dsh-profile-acp",
+  "private": true,
+  "dependencies": {
+    "dsh-acp-server": "0.14.2"
+  },
+  "dsh": {
+    "profile": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "dsh-acp-server"
+      ]
+    }
+  }
+}

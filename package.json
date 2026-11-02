@@ -1,0 +1,31 @@
+{
+  "name": "dsh-profiles-sync",
+  "version": "0.1.0",
+  "description": "Sync DeepSeek Harness (dsh) profile plugins and settings: declarative snapshot export/restore/diff with link-source checks and AES-encrypted credentials.",
+  "license": "MIT",
+  "bin": {
+    "dsh-profiles-sync": "bin/dsh-profiles-sync.sh"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dushaobindoudou/dsh-profiles-sync.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "profile",
+    "sync",
+    "settings",
+    "plugins",
+    "backup"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

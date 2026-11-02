@@ -1,0 +1,10 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+# 2026-10-08: route the default model through freeroute. The headless bundles
+# did not include dsh-freeroute, so every task hit the official DeepSeek route
+# and failed with QUOTA 402 / "Insufficient Balance" once that account ran dry.
+- id: agent-default-model
+  config:
+    provider: freeroute
+    model: sensenova/deepseek-v4-flash
