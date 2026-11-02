@@ -1,6 +1,6 @@
 {
   "name": "dsh-syncx",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Sync DeepSeek Harness (dsh) profile plugins and settings: declarative snapshot export/restore/diff with link-source checks and AES-encrypted credentials.",
   "license": "MIT",
   "bin": {

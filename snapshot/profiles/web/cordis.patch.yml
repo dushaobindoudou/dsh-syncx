@@ -86,7 +86,7 @@
   name: "@deepseek-ai/dsh-agent-default-model"
   config:
     provider: vol
-    model: glm-5-3-flash
+    model: deepseek-v4-1-flash
 - id: permission
   name: "@deepseek-ai/dsh-permission-presets"
   config:
@@ -148,7 +148,7 @@
 - insert:
     - id: dsh-purge
       name: dsh-purge
-      inject: [systemPrompt, tools]
+      inject: [ systemPrompt, tools ]
       config:
         enabled: true
         stripMnemon: true

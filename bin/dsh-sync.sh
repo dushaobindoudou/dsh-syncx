@@ -22,7 +22,20 @@
 set -euo pipefail
 
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
-SYNC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Data root resolution:
+#   1. $DSH_SYNC_DIR wins outright
+#   2. running from a repo checkout (physical path has .git/ or snapshot/) -> repo root
+#   3. global install (npm i -g dsh-syncx) -> ~/.config/dsh-sync
+# cd -P resolves npm's bin symlink so BASH_SOURCE/.. cannot land in ~/.local
+SYNC_DIR="${DSH_SYNC_DIR:-}"
+if [ -z "$SYNC_DIR" ]; then
+  _self="$(cd -P "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+  if [ -d "$_self/.git" ] || [ -d "$_self/snapshot" ]; then
+    SYNC_DIR="$_self"
+  else
+    SYNC_DIR="$HOME/.config/dsh-sync"
+  fi
+fi
 SNAP="$SYNC_DIR/snapshot"
 SECRET_KEY_FILE="${DSH_SYNC_KEYFILE:-$HOME/.config/dsh-sync/secret.key}"
 PROFILES=(web acp headless)
