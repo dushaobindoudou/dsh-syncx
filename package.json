@@ -17,13 +17,18 @@
   },
   "keywords": [
     "dsh",
+    "dsh-plugin",
+    "deepseek",
     "deepseek-harness",
+    "deepseek-ai",
     "cordis",
-    "profile",
     "sync",
+    "config-sync",
+    "profile-sync",
     "settings",
-    "plugins",
-    "backup"
+    "backup",
+    "cross-machine",
+    "cli"
   ],
   "engines": {
     "node": ">=18"

@@ -1,29 +1,57 @@
+<div align="center">
+
 # dsh-syncx
 
-Sync [DeepSeek Harness (dsh)](https://www.npmjs.com/package/@deepseek-ai/dsh) profile plugins and settings across machines or profiles.
+**Sync DeepSeek Harness (dsh) profiles across machines** —
+plugins & settings as declarative snapshots in git, with model credentials
+AES-encrypted by a local-only key.
 
-dsh ships **no built-in config sync** (no sync/export/import command in the CLI). But every profile's full state is declarative, so syncing = carrying a handful of files + one `pnpm install`.
+[![npm](https://img.shields.io/npm/v/dsh-syncx?logo=npm&color=cb3837)](https://www.npmjs.com/package/dsh-syncx)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-blue)](#requirements)
+[![Node](https://img.shields.io/node/v/dsh-syncx?logo=nodedotjs&color=339933)](https://www.npmjs.com/package/dsh-syncx)
 
-## What gets synced
+English · [简体中文](./README.zh-CN.md)
+
+</div>
+
+---
+
+`dsh-syncx` backs up and restores every [dsh](https://www.npmjs.com/package/@deepseek-ai/dsh)
+profile — plugin dependency lists, bundle load orders, model routing and all
+user settings — by carrying a handful of **declarative files** through a private
+git repo. dsh ships **no built-in config sync** (no sync/export/import command
+in its CLI); this tool fills that gap with a snapshot → push → clone → restore
+workflow that makes a fresh machine production-ready in minutes.
+
+## ✨ Why it works
+
+dsh profiles are already declarative — one `package.json` (plugin deps + bundle
+load list), one `cordis.patch.yml` (every user setting), plus lockfiles. So
+syncing is just: **capture those files, replay them with `pnpm install`**. What
+this tool adds:
+
+- **One command** per direction: `export` / `restore`, with `diff` to detect drift
+- **Encrypted credentials**: real API keys never touch git — only AES-256-CBC
+  ciphertext, decryptable only with a key file that lives on your machine
+- **`link:` awareness**: dsh profiles load local plugin sources via `link:` deps;
+  the snapshot records every source path and `links` verifies them on the target
+- **Auto-backup**: every restore stashes the current state to `backups/` first
+
+## 📦 What gets synced
 
 | State | Location | In repo as |
 |---|---|---|
-| Plugin deps + bundle load list | `~/.dsh/profiles/<name>/package.json` (`dependencies` + `dsh.profile.bundles`) | plain |
+| Plugin deps + bundle load list | `~/.dsh/profiles/<name>/package.json` | plain |
 | All user settings (models, theme, locale, plugin config) | `~/.dsh/profiles/<name>/cordis.patch.yml` | plain |
 | Locked versions | `pnpm-lock.yaml`, `pnpm-workspace.yaml` | plain |
-| Model routing (contains `keyRef` names only, no secrets) | `~/.dsh/freeroute.json` | plain |
-| Model credentials (real API keys) | `~/.dsh/.credentials.yaml` | **AES-256-CBC encrypted** (`.enc`) + sha256 for diff |
+| Model routing (contains `keyRef` names only — no secrets) | `~/.dsh/freeroute.json` | plain |
+| Model credentials (real API keys) | `~/.dsh/.credentials.yaml` | **AES-256-CBC `.enc`** + sha256 |
+| `link:` plugin source paths | extracted from `package.json` | `links.manifest.json` |
 
-`cordis.patch.yml` may contain a local ACP token — it is only valid for `127.0.0.1:<port>` on the same machine and cannot be used remotely.
+Not synced (session state, by design): `~/.dsh/sessions`, `~/.dsh/harness` agent memory.
 
-## Security model
-
-- The encryption key lives **only on your machine** (`~/.config/dsh-profiles-sync/secret.key`, 0600, generated on first `export`, never committed).
-- The repo can leak in full without exposing a single API key — the ciphertext is useless without the local key file.
-- Losing the key file means losing the credentials snapshot; back it up in your own secret store.
-- Plaintext credentials never touch the snapshot directory or git history (enforced by `.gitignore` + the script writing only `.enc`).
-
-## Usage
+## 🚀 Quick start
 
 ```bash
 npm i -g dsh-syncx
@@ -36,19 +64,62 @@ dsh-sync links           # verify link: plugin source dirs exist on this machine
 dsh-sync status          # overview (encryption state, checksum)
 ```
 
-Override targets with `DSH_HOME` and the key file with `DSH_SYNC_KEYFILE`. Requires bash + openssl (macOS/Linux).
+## 🔐 Security model
 
-> Name note: `dsh-sync` (unscoped) is taken on npm by an unrelated package, so the package is published as **`dsh-syncx`** — the installed **command** remains `dsh-sync`.
+- The encryption key lives **only on your machine**
+  (`~/.config/dsh-sync/secret.key`, `0600`, generated on first `export`, never committed).
+- The repo can leak in full without exposing a single API key — the ciphertext
+  is useless without the local key file. Losing the key file loses the
+  credentials snapshot, so back the key up in your own secret store.
+- Plaintext credentials never touch the snapshot directory or git history
+  (enforced by the script writing only `.enc`, plus `.gitignore`).
+- `cordis.patch.yml` may contain a local ACP token — valid only for
+  `127.0.0.1:<port>` on the same machine, useless remotely.
 
-## Cross-machine workflow
+## 🖥 Cross-machine workflow
 
-1. On the old machine: `dsh-profiles-sync export`, commit & push this repo (private recommended).
-2. On the new machine: clone the repo, sync the `link:` source repos (see `snapshot/links.manifest.json`), then `dsh-profiles-sync links` until all OK.
-3. Transfer the key file (`~/.config/dsh-profiles-sync/secret.key`) through your own secure channel.
-4. `dsh-profiles-sync restore-global && dsh-profiles-sync restore web`, then in each profile dir: `pnpm install`.
+1. **Old machine**: `dsh-sync export`, commit & push this repo (private recommended).
+2. **New machine**: clone the repo, sync the `link:` source repos listed in
+   `snapshot/links.manifest.json`, then `dsh-sync links` until all OK.
+3. Transfer `~/.config/dsh-sync/secret.key` through your own secure channel.
+4. `dsh-sync restore-global && dsh-sync restore web`, then in each profile dir: `pnpm install`.
 
-`~/.dsh/sessions` (chat history) and `~/.dsh/harness` (agent memory) are session state, not config — intentionally out of scope.
+Two data modes are supported automatically: running inside a clone of this repo
+uses the repo's `snapshot/`; running the globally-installed command uses
+`~/.config/dsh-sync/`. Override both with `DSH_SYNC_DIR`; override the key file
+with `DSH_SYNC_KEYFILE` and the dsh home with `DSH_HOME`.
+
+## 🧰 Requirements
+
+- bash + openssl (`pbkdf2` support) — macOS and Linux stock toolchains
+- Node.js ≥ 18 (for npm distribution)
+- python3 (only for the `links` manifest generation/verification)
+
+## ❓ FAQ
+
+**Is this an official dsh plugin?**
+No — it's a standalone CLI that operates on dsh's profile directories. It needs
+no cordis bundle, no host registration; it just reads and writes the
+declarative files dsh already defines.
+
+**Can I sync to a public repo?**
+Technically yes for everything except the credentials blob — but the repo also
+carries your full settings topology (which models you use where). Private is
+recommended; if you go public, keep `snapshot/global/` out of git.
+
+**Multiple profiles?**
+The snapshot carries every profile found under `~/.dsh/profiles`; restore
+per-profile with `dsh-sync restore <name>`.
+
+## 🔗 The dsh plugin family
+
+More tools for DeepSeek Harness by the same author:
+[dsh-bots](https://www.npmjs.com/package/dsh-bots) (multi-bot workbench) ·
+[dsh-hyperliquid](https://www.npmjs.com/package/dsh-hyperliquid) (Hyperliquid
+trading desk) · [dsh-plugin-security](https://www.npmjs.com/package/dsh-plugin-security)
+(plugin security gate) · [dsh-freeroute](https://www.npmjs.com/package/dsh-freeroute)
+(model routing). Browse all: `npm search dsh-plugin`.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
