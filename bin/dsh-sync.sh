@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# dsh-profiles-sync —— DeepSeek Harness (dsh) profile 插件与设置同步
+# dsh-sync (@dushaobindoudou/dsh-sync) —— DeepSeek Harness (dsh) profile 插件与设置同步
 #
 # dsh 本身没有内置配置同步；一个 profile 的全部状态由声明式文件构成：
 #   profiles/<name>/package.json        插件依赖 + dsh.profile.bundles 装载清单
@@ -24,7 +24,7 @@ set -euo pipefail
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
 SYNC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SNAP="$SYNC_DIR/snapshot"
-SECRET_KEY_FILE="${DSH_SYNC_KEYFILE:-$HOME/.config/dsh-profiles-sync/secret.key}"
+SECRET_KEY_FILE="${DSH_SYNC_KEYFILE:-$HOME/.config/dsh-sync/secret.key}"
 PROFILES=(web acp headless)
 PROFILE_FILES=(package.json cordis.patch.yml pnpm-workspace.yaml pnpm-lock.yaml)
 GLOBAL_PLAIN=(freeroute.json)

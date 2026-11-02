@@ -1,4 +1,4 @@
-# dsh-profiles-sync
+# dsh-sync (@dushaobindoudou/dsh-sync)
 
 Sync [DeepSeek Harness (dsh)](https://www.npmjs.com/package/@deepseek-ai/dsh) profile plugins and settings across machines or profiles.
 
@@ -26,7 +26,7 @@ dsh ships **no built-in config sync** (no sync/export/import command in the CLI)
 ## Usage
 
 ```bash
-npm i -g dsh-profiles-sync
+npm i -g @dushaobindoudou/dsh-sync
 
 dsh-sync export          # machine ~/.dsh -> snapshot/ (credentials auto-encrypted)
 dsh-sync diff web        # compare snapshot vs local (profile + global, credentials by sha256)
@@ -38,7 +38,7 @@ dsh-sync status          # overview (encryption state, checksum)
 
 Override targets with `DSH_HOME` and the key file with `DSH_SYNC_KEYFILE`. Requires bash + openssl (macOS/Linux).
 
-> Name note: the npm package is `dsh-profiles-sync` (the unscoped name `dsh-sync` is taken on npm by an unrelated package); the installed **command** is `dsh-sync`. The GitHub repo is `dsh-sync`.
+> Name note: the unscoped npm name `dsh-sync` is taken by an unrelated package (ZhenHuangLab), so the package publishes under the `@dushaobindoudou` scope — the installed **command** is `dsh-sync`, same as the GitHub repo.
 
 ## Cross-machine workflow
 
