@@ -56,18 +56,18 @@ Not synced (session state, by design): `~/.dsh/sessions`, `~/.dsh/harness` agent
 ```bash
 npm i -g dsh-syncx
 
-dsh-sync export          # machine ~/.dsh -> snapshot/ (credentials auto-encrypted)
-dsh-sync diff web        # compare snapshot vs local (profile + global, credentials by sha256)
-dsh-sync restore web     # snapshot -> web profile (auto-backs-up current state)
-dsh-sync restore-global  # snapshot -> ~/.dsh (freeroute.json + decrypt credentials back)
-dsh-sync links           # verify link: plugin source dirs exist on this machine
-dsh-sync status          # overview (encryption state, checksum)
+dsh-syncx export          # machine ~/.dsh -> snapshot/ (credentials auto-encrypted)
+dsh-syncx diff web        # compare snapshot vs local (profile + global, credentials by sha256)
+dsh-syncx restore web     # snapshot -> web profile (auto-backs-up current state)
+dsh-syncx restore-global  # snapshot -> ~/.dsh (freeroute.json + decrypt credentials back)
+dsh-syncx links           # verify link: plugin source dirs exist on this machine
+dsh-syncx status          # overview (encryption state, checksum)
 ```
 
 ## 🔐 Security model
 
 - The encryption key lives **only on your machine**
-  (`~/.config/dsh-sync/secret.key`, `0600`, generated on first `export`, never committed).
+  (`~/.config/dsh-syncx/secret.key`, `0600`, generated on first `export`, never committed).
 - The repo can leak in full without exposing a single API key — the ciphertext
   is useless without the local key file. Losing the key file loses the
   credentials snapshot, so back the key up in your own secret store.
@@ -78,15 +78,15 @@ dsh-sync status          # overview (encryption state, checksum)
 
 ## 🖥 Cross-machine workflow
 
-1. **Old machine**: `dsh-sync export`, commit & push this repo (private recommended).
+1. **Old machine**: `dsh-syncx export`, commit & push this repo (private recommended).
 2. **New machine**: clone the repo, sync the `link:` source repos listed in
-   `snapshot/links.manifest.json`, then `dsh-sync links` until all OK.
-3. Transfer `~/.config/dsh-sync/secret.key` through your own secure channel.
-4. `dsh-sync restore-global && dsh-sync restore web`, then in each profile dir: `pnpm install`.
+   `snapshot/links.manifest.json`, then `dsh-syncx links` until all OK.
+3. Transfer `~/.config/dsh-syncx/secret.key` through your own secure channel.
+4. `dsh-syncx restore-global && dsh-syncx restore web`, then in each profile dir: `pnpm install`.
 
 Two data modes are supported automatically: running inside a clone of this repo
 uses the repo's `snapshot/`; running the globally-installed command uses
-`~/.config/dsh-sync/`. Override both with `DSH_SYNC_DIR`; override the key file
+`~/.config/dsh-syncx/`. Override both with `DSH_SYNC_DIR`; override the key file
 with `DSH_SYNC_KEYFILE` and the dsh home with `DSH_HOME`.
 
 ## 🧰 Requirements
@@ -109,7 +109,7 @@ recommended; if you go public, keep `snapshot/global/` out of git.
 
 **Multiple profiles?**
 The snapshot carries every profile found under `~/.dsh/profiles`; restore
-per-profile with `dsh-sync restore <name>`.
+per-profile with `dsh-syncx restore <name>`.
 
 ## 🔗 The dsh plugin family
 

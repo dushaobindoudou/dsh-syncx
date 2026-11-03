@@ -53,17 +53,17 @@ dsh profile 本来就是声明式的——一个 `package.json`（插件依赖 +
 ```bash
 npm i -g dsh-syncx
 
-dsh-sync export          # 本机 ~/.dsh -> snapshot/（credentials 自动加密）
-dsh-sync diff web        # 对比快照与本机（profile + 全局，credentials 按 sha256）
-dsh-sync restore web     # 快照 -> web profile（自动备份现状）
-dsh-sync restore-global  # 快照 -> ~/.dsh（freeroute.json + 解密回写 credentials）
-dsh-sync links           # 校验 link: 插件源目录在本机是否存在
-dsh-sync status          # 概览（加密状态、校验和）
+dsh-syncx export          # 本机 ~/.dsh -> snapshot/（credentials 自动加密）
+dsh-syncx diff web        # 对比快照与本机（profile + 全局，credentials 按 sha256）
+dsh-syncx restore web     # 快照 -> web profile（自动备份现状）
+dsh-syncx restore-global  # 快照 -> ~/.dsh（freeroute.json + 解密回写 credentials）
+dsh-syncx links           # 校验 link: 插件源目录在本机是否存在
+dsh-syncx status          # 概览（加密状态、校验和）
 ```
 
 ## 🔐 安全模型
 
-- 加密密钥**只存在你的机器上**（`~/.config/dsh-sync/secret.key`，`0600`，
+- 加密密钥**只存在你的机器上**（`~/.config/dsh-syncx/secret.key`，`0600`，
   首次 `export` 自动生成，永不提交）。
 - 仓库整体泄露也暴露不了一个 API key——没有本地密钥文件，密文无用。
   密钥文件丢失等于凭证快照丢失，请自行妥善备份密钥。
@@ -73,14 +73,14 @@ dsh-sync status          # 概览（加密状态、校验和）
 
 ## 🖥 跨机器工作流
 
-1. **旧机器**：`dsh-sync export`，commit 并 push 本仓库（建议私有）。
+1. **旧机器**：`dsh-syncx export`，commit 并 push 本仓库（建议私有）。
 2. **新机器**：clone 仓库，同步 `snapshot/links.manifest.json` 里列出的 `link:`
-   源码仓库，然后 `dsh-sync links` 直到全部 OK。
-3. 通过你自己的安全通道传 `~/.config/dsh-sync/secret.key`。
-4. `dsh-sync restore-global && dsh-sync restore web`，再在每个 profile 目录 `pnpm install`。
+   源码仓库，然后 `dsh-syncx links` 直到全部 OK。
+3. 通过你自己的安全通道传 `~/.config/dsh-syncx/secret.key`。
+4. `dsh-syncx restore-global && dsh-syncx restore web`，再在每个 profile 目录 `pnpm install`。
 
 自动支持两种数据模式：在本仓库 clone 内运行使用仓库的 `snapshot/`；
-全局安装后运行使用 `~/.config/dsh-sync/`。两者都可用 `DSH_SYNC_DIR` 覆盖；
+全局安装后运行使用 `~/.config/dsh-syncx/`。两者都可用 `DSH_SYNC_DIR` 覆盖；
 密钥文件用 `DSH_SYNC_KEYFILE`，dsh 主目录用 `DSH_HOME`。
 
 ## 🧰 系统要求
@@ -101,7 +101,7 @@ dsh-sync status          # 概览（加密状态、校验和）
 
 **多 profile？**
 快照携带 `~/.dsh/profiles` 下发现的全部 profile；用
-`dsh-sync restore <name>` 按需恢复。
+`dsh-syncx restore <name>` 按需恢复。
 
 ## 🔗 dsh 插件家族
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# dsh-sync (@dushaobindoudou/dsh-sync) —— DeepSeek Harness (dsh) profile 插件与设置同步
+# dsh-syncx (@dushaobindoudou/dsh-syncx) —— DeepSeek Harness (dsh) profile 插件与设置同步
 #
 # dsh 本身没有内置配置同步；一个 profile 的全部状态由声明式文件构成：
 #   profiles/<name>/package.json        插件依赖 + dsh.profile.bundles 装载清单
@@ -13,19 +13,19 @@
 # 仓库即使整体泄露也无法解出任何 API key；本机侧泄露与不加密时等价。
 #
 # 用法:
-#   dsh-sync export                 本机 ~/.dsh -> snapshot/（自动加密 credentials）
-#   dsh-sync diff [profile]         对比快照与本机（profile + 全局）
-#   dsh-sync restore <profile>      快照 -> profile（自动备份现状）
-#   dsh-sync restore-global         快照 -> ~/.dsh（freeroute.json + credentials 解密回写）
-#   dsh-sync links                  校验 link: 插件源码目录在本机是否存在
-#   dsh-sync status                 快照概览（加密状态、checksum）
+#   dsh-syncx export                 本机 ~/.dsh -> snapshot/（自动加密 credentials）
+#   dsh-syncx diff [profile]         对比快照与本机（profile + 全局）
+#   dsh-syncx restore <profile>      快照 -> profile（自动备份现状）
+#   dsh-syncx restore-global         快照 -> ~/.dsh（freeroute.json + credentials 解密回写）
+#   dsh-syncx links                  校验 link: 插件源码目录在本机是否存在
+#   dsh-syncx status                 快照概览（加密状态、checksum）
 set -euo pipefail
 
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
 # Data root resolution:
 #   1. $DSH_SYNC_DIR wins outright
 #   2. running from a repo checkout (physical path has .git/ or snapshot/) -> repo root
-#   3. global install (npm i -g dsh-syncx) -> ~/.config/dsh-sync
+#   3. global install (npm i -g dsh-syncx) -> ~/.config/dsh-syncx
 # cd -P resolves npm's bin symlink so BASH_SOURCE/.. cannot land in ~/.local
 SYNC_DIR="${DSH_SYNC_DIR:-}"
 if [ -z "$SYNC_DIR" ]; then
@@ -33,11 +33,11 @@ if [ -z "$SYNC_DIR" ]; then
   if [ -d "$_self/.git" ] || [ -d "$_self/snapshot" ]; then
     SYNC_DIR="$_self"
   else
-    SYNC_DIR="$HOME/.config/dsh-sync"
+    SYNC_DIR="$HOME/.config/dsh-syncx"
   fi
 fi
 SNAP="$SYNC_DIR/snapshot"
-SECRET_KEY_FILE="${DSH_SYNC_KEYFILE:-$HOME/.config/dsh-sync/secret.key}"
+SECRET_KEY_FILE="${DSH_SYNC_KEYFILE:-$HOME/.config/dsh-syncx/secret.key}"
 PROFILES=(web acp headless)
 PROFILE_FILES=(package.json cordis.patch.yml pnpm-workspace.yaml pnpm-lock.yaml)
 GLOBAL_PLAIN=(freeroute.json)
@@ -198,7 +198,7 @@ PY
 case "${1:-}" in
   export)         export_snapshot ;;
   diff)           diff_profile "${2:-web}" ;;
-  restore)        restore_profile "${2:?usage: dsh-sync restore <profile>}" ;;
+  restore)        restore_profile "${2:?usage: dsh-syncx restore <profile>}" ;;
   restore-global) restore_global ;;
   links)          check_links ;;
   status)         status_overview ;;
