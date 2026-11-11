@@ -16,5 +16,8 @@
     "link:/Users/liepin/workspace/dsh-workspace/dsh-freeroute",
     "link:/Users/liepin/workspace/dsh-workspace/dsh-plugin-doctor",
     "link:/Users/liepin/workspace/dsh-workspace/dsh-refine"
+  ],
+  "dhl-debug": [
+    "link:/Users/liepin/workspace/dsh-workspace/dsh-hyperliquid"
   ]
 }

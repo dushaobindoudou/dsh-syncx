@@ -6,4 +6,3 @@ autoInstallPeers: false
 
 allowBuilds:
   dsh-purge: true
-  "dsh-purge@https://codeload.github.com/YuJunZhiXue/dsh-purge/tar.gz/refs/heads/master": true

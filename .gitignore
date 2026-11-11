@@ -10,3 +10,8 @@ backups/
 # npm
 node_modules/
 *.tgz
+
+# 本机脱敏映射表（加密）与恢复备份：永不入仓
+*.redactions.json
+redactions.json.enc
+.local/

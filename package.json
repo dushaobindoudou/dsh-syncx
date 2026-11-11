@@ -1,7 +1,7 @@
 {
   "name": "dsh-syncx",
-  "version": "0.2.2",
-  "description": "Sync DeepSeek Harness (dsh) profile plugins and settings: declarative snapshot export/restore/diff with link-source checks and AES-encrypted credentials.",
+  "version": "0.3.0",
+  "description": "Sync DeepSeek Harness (dsh) profiles to a private git repo: per-profile snapshot export/restore/diff, automatic inline-secret redaction, AES-encrypted credentials, and a pre-push secret gate.",
   "license": "MIT",
   "bin": {
     "dsh-syncx": "bin/dsh-syncx.sh"
@@ -9,6 +9,7 @@
   "files": [
     "bin",
     "README.md",
+    "README.zh-CN.md",
     "LICENSE"
   ],
   "repository": {
@@ -28,6 +29,8 @@
     "settings",
     "backup",
     "cross-machine",
+    "secrets",
+    "redaction",
     "cli"
   ],
   "engines": {

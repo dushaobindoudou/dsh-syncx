@@ -1,0 +1,8 @@
+{
+  "name": "dhl-debug-profile",
+  "private": true,
+  "dependencies": {
+    "dsh-hyperliquid": "link:/Users/liepin/workspace/dsh-workspace/dsh-hyperliquid"
+  },
+  "dsh": { "profile": { "bundles": ["dsh-hyperliquid"] } }
+}

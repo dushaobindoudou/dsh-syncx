@@ -2,8 +2,8 @@
 
 # dsh-syncx
 
-**跨机器同步 DeepSeek Harness (dsh) 的 profile** ——
-插件与设置以声明式快照进 git，模型凭证用仅存本机的密钥 AES 加密。
+**把 DeepSeek Harness (dsh) 的 profile 同步到你自己的 Git 仓库 —— 一个密钥都不外泄。**
+按 profile 快照、配置内联密钥自动脱敏、凭证 AES 加密、推送前硬闸拦截明文敏感信息。
 
 [![npm](https://img.shields.io/npm/v/dsh-syncx?logo=npm&color=cb3837)](https://www.npmjs.com/package/dsh-syncx)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
@@ -17,34 +17,37 @@
 ---
 
 `dsh-syncx` 备份并恢复每个 [dsh](https://www.npmjs.com/package/@deepseek-ai/dsh)
-profile——插件依赖清单、bundle 装载顺序、模型路由和全部用户设置——把少数几个
-**声明式文件**经由私有 git 仓库搬运。dsh 本身**没有内置配置同步**（CLI 无
-sync/export/import 命令）；本工具用「快照 → 推送 → clone → 恢复」的工作流补上这块，
-让一台新机器几分钟进入生产状态。
+profile——插件依赖清单、bundle 装载顺序、模型路由与全部用户设置——靠的是把少数几个
+**声明式文件**搬进你自己的 git 仓库（GitHub、Gitea、私有服务器都行）。dsh 本身
+**没有内置配置同步**，本工具补上这块：
 
-## ✨ 为什么可行
+```
+dsh-syncx push web        # 导出 → 脱敏 → 扫描 → commit → git push，一条命令
+dsh-syncx restore web     # 换机器 → 快照 → profile，密钥在本机自动回填
+```
 
-dsh profile 本来就是声明式的——一个 `package.json`（插件依赖 + bundle 装载清单）、
-一个 `cordis.patch.yml`（全部用户设置），加上锁文件。所以同步本质就是：
-**捕获这些文件，用 `pnpm install` 重放**。本工具在此基础上增加：
+## ✨ v0.3 新增
 
-- **每方向一条命令**：`export` / `restore`，配 `diff` 检测漂移
-- **凭证加密**：真实 API key 永不进 git——只有 AES-256-CBC 密文，且只能用
-  存于本机的密钥文件解开
-- **`link:` 感知**：dsh profile 通过 `link:` 依赖加载本地插件源码；快照记录全部
-  源路径，`links` 在目标机器逐一校验
-- **自动备份**：每次恢复先把现状存入 `backups/`
+| 能力 | 命令 | 说明 |
+|---|---|---|
+| 一条命令发到 GitHub | `push [profile...]` | 导出 + 敏感信息闸 + commit + push |
+| 按 profile 同步 | `export acp`、`push web,acp`、`diff all` | 只同步点名的 profile，`all` 表示 `~/.dsh/profiles` 下全部 |
+| 配置内联密钥脱敏 | `export` 时自动 | `cordis.patch.yml` 里的 `token:`、`apiKey:`、密码、密钥 → `__REDACTED_<规则>_<哈希>__` |
+| 推送前硬闸 | `push` 时自动 | 仓库里还有高危明文敏感信息就拒绝推送（`--allow-findings` 才能强推） |
+| 还原仍可用 | `restore` 时自动 | 占位符从本机**加密**映射表回填，恢复出来的 profile 照常能用 |
+| 历史清理 | `scrub-history --yes` | 把每个历史 commit 里的快照重新脱敏，清 reflog、丢旧对象 |
 
 ## 📦 同步什么
 
 | 状态 | 位置 | 入仓形态 |
 |---|---|---|
 | 插件依赖 + bundle 装载清单 | `~/.dsh/profiles/<name>/package.json` | 明文 |
-| 全部用户设置（模型、主题、语言、插件配置） | `~/.dsh/profiles/<name>/cordis.patch.yml` | 明文 |
+| 全部用户设置（模型、主题、语言、插件配置） | `~/.dsh/profiles/<name>/cordis.patch.yml` | 明文，**内联密钥已脱敏** |
 | 版本锁定 | `pnpm-lock.yaml`、`pnpm-workspace.yaml` | 明文 |
-| 模型路由（仅含 `keyRef` 引用名——无密钥） | `~/.dsh/freeroute.json` | 明文 |
+| 模型路由（仅 `keyRef` 环境变量名） | `~/.dsh/freeroute.json` | 明文，必要时脱敏 |
 | 模型凭证（真实 API key） | `~/.dsh/.credentials.yaml` | **AES-256-CBC `.enc`** + sha256 |
 | `link:` 插件源路径 | 从 `package.json` 提取 | `links.manifest.json` |
+| 脱敏索引（占位符 → 真值） | `~/.config/dsh-syncx/redactions.json.enc` | **永不入仓** |
 
 不同步（会话状态，有意设计）：`~/.dsh/sessions`、`~/.dsh/harness` 记忆。
 
@@ -52,66 +55,82 @@ dsh profile 本来就是声明式的——一个 `package.json`（插件依赖 +
 
 ```bash
 npm i -g dsh-syncx
+cd ~/my-config-repo && git remote add origin git@github.com:<you>/dsh-syncx.git
 
-dsh-syncx export          # 本机 ~/.dsh -> snapshot/（credentials 自动加密）
-dsh-syncx diff web        # 对比快照与本机（profile + 全局，credentials 按 sha256）
-dsh-syncx restore web     # 快照 -> web profile（自动备份现状）
-dsh-syncx restore-global  # 快照 -> ~/.dsh（freeroute.json + 解密回写 credentials）
-dsh-syncx links           # 校验 link: 插件源目录在本机是否存在
-dsh-syncx status          # 概览（加密状态、校验和）
+dsh-syncx push all             # 整套动作：导出 + 脱敏 + 扫描 + commit + push
+dsh-syncx push web acp         # 只同步这两个 profile
+dsh-syncx diff all             # 快照 vs 本机（占位符先回填，比较是真实差异）
+dsh-syncx scan --snapshot      # 只看：敏感信息都在哪（不改文件）
+dsh-syncx status               # profile、脱敏条数、加密状态、远端
+
+# 另一台机器
+git clone git@github.com:<you>/dsh-syncx.git && cd dsh-syncx
+dsh-syncx links                # link: 源目录是否都在
+dsh-syncx restore-global       # ~/.dsh/freeroute.json + credentials（解密回写 0600）
+dsh-syncx restore web          # profile 文件，密钥从本机映射回填
+cd ~/.dsh/profiles/web && pnpm install
 ```
 
-## 🔐 安全模型
+## 🔐 安全模型（三层独立防线）
 
-- 加密密钥**只存在你的机器上**（`~/.config/dsh-syncx/secret.key`，`0600`，
-  首次 `export` 自动生成，永不提交）。
-- 仓库整体泄露也暴露不了一个 API key——没有本地密钥文件，密文无用。
-  密钥文件丢失等于凭证快照丢失，请自行妥善备份密钥。
-- 明文凭证永不落入快照目录与 git 历史（脚本只写 `.enc`，`.gitignore` 双保险）。
-- `cordis.patch.yml` 可能含本地 ACP token——只对本机 `127.0.0.1:<端口>` 有效，
-  远程无法使用。
+1. **凭证永不落明文。** 只写 `.credentials.yaml.enc` + sha256；密钥文件
+   `~/.config/dsh-syncx/secret.key`（0600，仅本机，首次 export 生成）。
+2. **内联密钥在提交前脱敏。** 扫描器既认 token 形态（`sk-…`、`ghp_…`、`xoxb-…`、
+   `AKIA…`、`AIza…`、JWT、SSH/PEM 私钥、0x 私钥、webhook URL、Telegram bot token），
+   也认上下文键名（`token:`、`apiKey:`、`password:`、`secret:`、`passphrase:`、
+   `webhook:`……），同时放过环境变量引用（`DEEPSEEK_API_KEY`、`${VAR}`、`keyRef`、
+   `apiKeyEnv`、`secretStore: keychain`、路径）。真值写进
+   `redactions.json.enc`（同一把 AES 密钥、0600、已 gitignore）。
+3. **推送有闸。** commit 前再整仓扫一遍，只要有一处高危命中，就带着
+   `文件:行 规则` 拒绝推送。
+
+因此整仓即使泄露（哪怕公开）也解不出 API key、bot token 或密码。在本机 restore
+会自动回填；换机器则需要手工搬两个文件：`secret.key` 和 `redactions.json.enc`。
 
 ## 🖥 跨机器工作流
 
-1. **旧机器**：`dsh-syncx export`，commit 并 push 本仓库（建议私有）。
-2. **新机器**：clone 仓库，同步 `snapshot/links.manifest.json` 里列出的 `link:`
-   源码仓库，然后 `dsh-syncx links` 直到全部 OK。
-3. 通过你自己的安全通道传 `~/.config/dsh-syncx/secret.key`。
+1. **旧机器**：`dsh-syncx push all`（commit 与 push 都会代办）。
+2. **新机器**：clone 仓库，把 `snapshot/links.manifest.json` 里列出的 `link:`
+   源码仓库同步到本机，`dsh-syncx links` 到全部 OK。
+3. 通过你自己的安全通道传 `~/.config/dsh-syncx/secret.key` **和**
+   `redactions.json.enc`（两者都仅本机，缺一个就无法还原真值）。
 4. `dsh-syncx restore-global && dsh-syncx restore web`，再在每个 profile 目录 `pnpm install`。
 
-自动支持两种数据模式：在本仓库 clone 内运行使用仓库的 `snapshot/`；
-全局安装后运行使用 `~/.config/dsh-syncx/`。两者都可用 `DSH_SYNC_DIR` 覆盖；
-密钥文件用 `DSH_SYNC_KEYFILE`，dsh 主目录用 `DSH_HOME`。
+数据目录自动判定：在仓库 clone 里运行就用该仓库的 `snapshot/`；全局安装的命令
+默认 `~/.config/dsh-syncx/`。可用 `DSH_SYNC_DIR`、`DSH_SYNC_KEYFILE`、
+`DSH_SYNC_REDACTIONS`、`DSH_HOME`、`DSH_SYNC_REMOTE`、`DSH_SYNC_BRANCH` 覆盖。
 
 ## 🧰 系统要求
 
-- bash + openssl（支持 `pbkdf2`）——macOS 与 Linux 原生自带
-- Node.js ≥ 18（npm 分发）
-- python3（仅 `links` 清单生成/校验用）
+- bash + openssl（支持 `pbkdf2`）——macOS / Linux 自带
+- python3 ≥ 3.7——扫描与脱敏（纯标准库，无需 pip）
+- Node.js ≥ 18（npm 分发用）
+- git（`push` / `scrub-history` 用）
 
-## ❓ FAQ
+## ❓ 常见问题
 
-**这是 dsh 官方插件吗？**
-不是——它是独立 CLI，直接操作 dsh 的 profile 目录。不需要 cordis bundle、
-不需要 host 注册；只是读写 dsh 已定义的声明式文件。
+**这是官方 dsh 插件吗？** 不是——独立 CLI，只读写 dsh 自己定义的 profile 文件，
+不需要 cordis bundle，也不需要宿主注册。
 
-**能同步到公开仓库吗？**
-除凭证 blob 外技术上可以——但仓库还带着你完整的设置拓扑（哪里用什么模型）。
-建议私有；若公开，把 `snapshot/global/` 排除出 git。
+**能同步到公开仓库吗？** v0.3 会脱敏 + 推送闸，公开也扛得住；但设置拓扑本身仍能
+看出你用哪些模型和服务，私有仓库依旧是更稳的选择。
 
-**多 profile？**
-快照携带 `~/.dsh/profiles` 下发现的全部 profile；用
-`dsh-syncx restore <name>` 按需恢复。
+**脱敏功能之前就已经把密钥提交进去了怎么办？** 先
+`dsh-syncx scrub-history --yes`，再
+`git push --force-with-lease origin <branch>`。命令会先写
+`backups/history-<ts>.bundle`，本地不会丢东西。
+
+**多 profile 怎么同步？** `export`/`push`/`diff` 都接受列表：
+`dsh-syncx push web acp headless`，或 `all`（默认）。
 
 ## 🔗 dsh 插件家族
 
-同一作者的更多 DeepSeek Harness 工具：
-[dsh-bots](https://www.npmjs.com/package/dsh-bots)（多 bot 工作台）·
-[dsh-hyperliquid](https://www.npmjs.com/package/dsh-hyperliquid)（Hyperliquid 交易台）·
-[dsh-plugin-security](https://www.npmjs.com/package/dsh-plugin-security)（插件安全门）·
-[dsh-freeroute](https://www.npmjs.com/package/dsh-freeroute)（模型路由）。
-浏览全部：`npm search dsh-plugin`。
+[dsh-bots](https://www.npmjs.com/package/dsh-bots) ·
+[dsh-hyperliquid](https://www.npmjs.com/package/dsh-hyperliquid) ·
+[dsh-plugin-security](https://www.npmjs.com/package/dsh-plugin-security) ·
+[dsh-freeroute](https://www.npmjs.com/package/dsh-freeroute)。
+全部：`npm search dsh-plugin`。
 
-## 许可
+## License
 
 [MIT](./LICENSE)
