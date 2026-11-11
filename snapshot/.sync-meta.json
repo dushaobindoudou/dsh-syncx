@@ -1,12 +1,9 @@
 {
   "tool": "dsh-syncx",
   "version": "0.3.0",
-  "exportedAt": "2026-11-11T10:04:59+08:00",
+  "exportedAt": "2026-11-11T10:06:54+08:00",
   "profiles": [
-    "acp",
-    "dhl-debug",
-    "headless",
-    "web"
+    "acp"
   ],
   "placeholders": 1,
   "credentials": "AES-256-CBC .enc (key stays local, 0600)"
