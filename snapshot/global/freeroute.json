@@ -48,11 +48,13 @@
           "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
           "google/gemma-4-26b-a4b-it:free",
           "google/gemma-4-31b-it:free",
-          "openrouter/free"
+          "openrouter/free",
+          "nvidia/nemotron-3.5-super-vl:free",
+          "xingchen-agi/xing4.0-29b-a4b:free"
         ],
         "keyRef": "FREEROUTE_OPENROUTER_API_KEY",
         "name": "OpenRouter",
-        "note": "18 款现役免费档（2026-08-28 live 同步，含 openrouter/free 自动路由）；content-safety 分类器不收录。未充值约 50 次/天。 （2026-09-09 复查：新增 ling-3.0-flash-sante / nex-n2.5-mini / nex-n2.5-pro / nemotron-3.5-content-safety；z-ai/glm-5.2、minimax-m3、minimax-m2.7 从列表消失） （2026-09-16 复查：z-ai/glm-5.2:free 与 inclusionai/ling-3.0-flash-vl:free 上新；minimax-m3:free / minimax-m2.7:free 下线；openrouter/free 仍在列） （2026-09-16 晚间复查：stealth/union-alpha 上新——union-alpha stealth 预览，$0 计费实测出字（cost:0），262k 视觉，不占 :free 日额） （2026-09-22 复查：qwen/qwen3.8-27b:free 上新——$0 定价、262k、支持视觉输入，实测连续 429 拥挤，交由插件冷却切换；其余 :free 款无变化） （2026-09-24 复查：inclusionai/ling-3.0-flash-vl:free 已从 /models 下架移除；其余 :free 款无变化） （2026-10-10 复查：ling-3.0-flash-fin/-sante、nex-n2.5-mini/pro、qwen3.8-27b、z-ai/glm-5.2、stealth/union-alpha 已 delisted 移除；apodex-1.1-mini 上新收录；inkling 系启用 agentic harness 围栏（带 referer/title 头仍 403）暂保留观察；gemma-4 系与 laguna-xs 为上游共享池 429（暂时性）；多款按 /models 元数据补视觉声明） （2026-10-15 复查：apodex/apodex-1.1-mini:free 已从 /models 下架移除（10-10 收录后短命下线）；openrouter/free 与 dots-3-note-preview:free 实测 200；inkling 系 agentic harness 围栏依旧（403）；gemma-4-31b-it 与 laguna-xs-2.1 仍为上游共享池 429；无新上 :free，现役 :free 收敛为 15 款） （2026-11-03 复查：poolside/laguna-s-2.1:free、poolside/laguna-xs-2.1:free、nvidia/nemotron-3-super-120b-a12b:free、minimax/minimax-m3.1-flash:free 已 delisted 移除；recursive/flint-v1.0:free 上新但实测 503 Provider returned error，暂不收录；thinkingmachines/inkling:free 与 inkling-small:free 仍 403 agentic-harness 围栏（带 HTTP-Referer/X-Title 亦不通）移出本地清单；cohere/north-mini-code:free 与 openrouter/free 实测出字）",
+        "note": "18 款现役免费档（2026-08-28 live 同步，含 openrouter/free 自动路由）；content-safety 分类器不收录。未充值约 50 次/天。 （2026-09-09 复查：新增 ling-3.0-flash-sante / nex-n2.5-mini / nex-n2.5-pro / nemotron-3.5-content-safety；z-ai/glm-5.2、minimax-m3、minimax-m2.7 从列表消失） （2026-09-16 复查：z-ai/glm-5.2:free 与 inclusionai/ling-3.0-flash-vl:free 上新；minimax-m3:free / minimax-m2.7:free 下线；openrouter/free 仍在列） （2026-09-16 晚间复查：stealth/union-alpha 上新——union-alpha stealth 预览，$0 计费实测出字（cost:0），262k 视觉，不占 :free 日额） （2026-09-22 复查：qwen/qwen3.8-27b:free 上新——$0 定价、262k、支持视觉输入，实测连续 429 拥挤，交由插件冷却切换；其余 :free 款无变化） （2026-09-24 复查：inclusionai/ling-3.0-flash-vl:free 已从 /models 下架移除；其余 :free 款无变化） （2026-10-10 复查：ling-3.0-flash-fin/-sante、nex-n2.5-mini/pro、qwen3.8-27b、z-ai/glm-5.2、stealth/union-alpha 已 delisted 移除；apodex-1.1-mini 上新收录；inkling 系启用 agentic harness 围栏（带 referer/title 头仍 403）暂保留观察；gemma-4 系与 laguna-xs 为上游共享池 429（暂时性）；多款按 /models 元数据补视觉声明） （2026-10-15 复查：apodex/apodex-1.1-mini:free 已从 /models 下架移除（10-10 收录后短命下线）；openrouter/free 与 dots-3-note-preview:free 实测 200；inkling 系 agentic harness 围栏依旧（403）；gemma-4-31b-it 与 laguna-xs-2.1 仍为上游共享池 429；无新上 :free，现役 :free 收敛为 15 款） （2026-11-03 复查：poolside/laguna-s-2.1:free、poolside/laguna-xs-2.1:free、nvidia/nemotron-3-super-120b-a12b:free、minimax/minimax-m3.1-flash:free 已 delisted 移除；recursive/flint-v1.0:free 上新但实测 503 Provider returned error，暂不收录；thinkingmachines/inkling:free 与 inkling-small:free 仍 403 agentic-harness 围栏（带 HTTP-Referer/X-Title 亦不通）移出本地清单；cohere/north-mini-code:free 与 openrouter/free 实测出字） （2026-11-11 目录同步：新增 2 款免费模型 nvidia/nemotron-3.5-super-vl:free、xingchen-agi/xing4.0-29b-a4b:free）",
         "defaultModel": "openrouter/free",
         "models": [
           {
@@ -128,6 +130,21 @@
               "text",
               "image"
             ]
+          },
+          {
+            "id": "nvidia/nemotron-3.5-super-vl:free",
+            "name": "NVIDIA: Nemotron 3.5 Super VL (free)",
+            "contextWindow": 1048576,
+            "inputModalities": [
+              "text",
+              "image",
+              "video"
+            ]
+          },
+          {
+            "id": "xingchen-agi/xing4.0-29b-a4b:free",
+            "name": "XingChen: Xing4.0 29B A4B (free)",
+            "contextWindow": 262144
           }
         ]
       }
@@ -149,7 +166,7 @@
         ],
         "keyRef": "FREEROUTE_OPENCODE_API_KEY",
         "name": "OpenCode Zen",
-        "note": "7 款现役 -free（2026-08-28 live 同步：hy3-free 下线，ling-3.0-flash-fin-free 上新）。免费额度疑似按天滚动，打满自动冷却切其他上游。 （2026-09-09 复查：muse-spark-1.3-contributor-free 上新，laguna-s-2.1-free 下线） （2026-09-16 复查：7 款 -free 全部在列，models 收录清理 laguna-s-2.1-free） （2026-09-16 晚间复查：union-alpha stealth 预览上新；免费档启用客户端围栏——API 直调无论是否带 Key 均报 FreeTierError「free tier can only be used from within OpenCode」或上游不可用，7 款 -free 暂无法从第三方工具调用，freeModels 置空待观察） （2026-09-22 复查：客户端围栏依旧——mimo-v2.5-free / mimo-v2.6-flash-free 实测 403 FreeTierError，freeModels 维持置空；mimo-v2.6-flash-free / jev-1.13-free 上新先录 models 待围栏解除） （2026-09-24 复查：围栏按款放行——space-bunny-free 实测 200 出字收入免费档，其余 -free 仍 403 FreeTierError 围栏内；mimo-v2.6-flash-free 已在上轮 models） （2026-10-10 复查：deepseek-v4-flash-free / ling-3.0-flash-fin-free / mimo-v2.5-free / nemotron-3-ultra-free / union-alpha 已下架移除；ling-3.1-flash-free / step-5-preview-free / longcat-2.5-preview-free 上新（围栏未解，实测 403 FreeTier）；space-bunny-free 仍唯一实测 200，默认模型切换为它） （2026-10-15 复查：围栏全面收紧——space-bunny-free 也转 403 FreeTierError，第三方可用免费档归零，freeModels 置空；ling-3.1-flash-free 已从 /models 下架移除；cat-jam-free 上新但 403 not available in your country（与 muse-spark-1.3 同款国家限制）仅录 models 观察；step-5/longcat/jev/mimo 围栏不变） （2026-10-15 晚间复查：deepseek-v4.1-flash-free 上新先录 models——实测同撞客户端围栏 403 FreeTierError；space-bunny/mimo/jev/step-5/longcat/nemotron-3.5 围栏不变；cat-jam 与 muse-spark 两代为国家限制 403；付费档 claude/gemini/deepseek 大批上架不属免费口径；freeModels 维持置空） （2026-11-03 复查：客户端围栏已解除——免费款实测返回 429「Free usage limit reached」（当日免费额度用尽，属账号额度而非 FreeTierError），按 /models 收录 8 款 -free 与 big-pickle；space-bunny-free / x-preview-f-free / jev-1.13-free 等旧款 400「Model is unavailable」已下架；默认改为 glm-5.3-flash-free）",
+        "note": "7 款现役 -free（2026-08-28 live 同步：hy3-free 下线，ling-3.0-flash-fin-free 上新）。免费额度疑似按天滚动，打满自动冷却切其他上游。 （2026-09-09 复查：muse-spark-1.3-contributor-free 上新，laguna-s-2.1-free 下线） （2026-09-16 复查：7 款 -free 全部在列，models 收录清理 laguna-s-2.1-free） （2026-09-16 晚间复查：union-alpha stealth 预览上新；免费档启用客户端围栏——API 直调无论是否带 Key 均报 FreeTierError「free tier can only be used from within OpenCode」或上游不可用，7 款 -free 暂无法从第三方工具调用，freeModels 置空待观察） （2026-09-22 复查：客户端围栏依旧——mimo-v2.5-free / mimo-v2.6-flash-free 实测 403 FreeTierError，freeModels 维持置空；mimo-v2.6-flash-free / jev-1.13-free 上新先录 models 待围栏解除） （2026-09-24 复查：围栏按款放行——space-bunny-free 实测 200 出字收入免费档，其余 -free 仍 403 FreeTierError 围栏内；mimo-v2.6-flash-free 已在上轮 models） （2026-10-10 复查：deepseek-v4-flash-free / ling-3.0-flash-fin-free / mimo-v2.5-free / nemotron-3-ultra-free / union-alpha 已下架移除；ling-3.1-flash-free / step-5-preview-free / longcat-2.5-preview-free 上新（围栏未解，实测 403 FreeTier）；space-bunny-free 仍唯一实测 200，默认模型切换为它） （2026-10-15 复查：围栏全面收紧——space-bunny-free 也转 403 FreeTierError，第三方可用免费档归零，freeModels 置空；ling-3.1-flash-free 已从 /models 下架移除；cat-jam-free 上新但 403 not available in your country（与 muse-spark-1.3 同款国家限制）仅录 models 观察；step-5/longcat/jev/mimo 围栏不变） （2026-10-15 晚间复查：deepseek-v4.1-flash-free 上新先录 models——实测同撞客户端围栏 403 FreeTierError；space-bunny/mimo/jev/step-5/longcat/nemotron-3.5 围栏不变；cat-jam 与 muse-spark 两代为国家限制 403；付费档 claude/gemini/deepseek 大批上架不属免费口径；freeModels 维持置空） （2026-11-03 复查：客户端围栏已解除——免费款实测返回 429「Free usage limit reached」（当日免费额度用尽，属账号额度而非 FreeTierError），按 /models 收录 8 款 -free 与 big-pickle；space-bunny-free / x-preview-f-free / jev-1.13-free 等旧款 400「Model is unavailable」已下架；默认改为 glm-5.3-flash-free） （2026-11-11 目录同步：新增 6 款免费模型 beam-free、big-pickle、flint-40b-free、glm-5.3-flash-free、nemotron-3.5-super-vl-free、pulse-alpha-free）",
         "defaultModel": "glm-5.3-flash-free",
         "models": [
           {
@@ -166,6 +183,33 @@
             "id": "deepseek-v4.1-flash-free",
             "name": "deepseek-v4.1-flash (free)",
             "contextWindow": 131072
+          },
+          {
+            "id": "beam-free",
+            "name": "beam-free",
+            "contextWindow": 131072
+          },
+          {
+            "id": "big-pickle",
+            "name": "big-pickle (free)"
+          },
+          {
+            "id": "flint-40b-free",
+            "name": "flint-40b (free)"
+          },
+          {
+            "id": "glm-5.3-flash-free",
+            "name": "glm-5.3-flash-free",
+            "contextWindow": 131072
+          },
+          {
+            "id": "nemotron-3.5-super-vl-free",
+            "name": "nemotron-3.5-super-vl-free",
+            "contextWindow": 1048576
+          },
+          {
+            "id": "pulse-alpha-free",
+            "name": "pulse-alpha (free)"
           }
         ]
       }
@@ -214,7 +258,7 @@
         ],
         "keyRef": "FREEROUTE_AIHUBMIX_API_KEY",
         "name": "AIHubMix",
-        "note": "51 款 -free（2026-08-28 live 同步，models 收录前 24）；未充值账号仅 10 次试用，充值后免费模型不再计次；国内网络需代理。 （2026-09-09 复查：免费列表扩至 54 款，含 gemini-3.8-flash-free / gpt-image-2-free 等新款） （2026-09-16 复查：minimax-m3-free 下线，免费列表 54→53）（2026-09-18 复查：live /models 对齐——gemini-3-flash-preview-free、gemini-3.5/3.6/3.7/3.8-flash-free、gemma-4-26b/31b-free、gpt-4.1(-mini/-nano)-free、gpt-4o-free、gpt-5.5-free、gpt-image-2-free、gpt-oss-20b-free 共 14 款已从上游下架移除；新上 agents-a1-free / intern-s2-free / union-alpha-free（按 -free 命名收录，计费未实测）。免费列表 53→42。） （2026-09-22 复查：mimo v2.6 系转免费——xiaomi-mimo-v2.6-flash-free / xiaomi-mimo-v2.6-pro-free 上新收录（-free 命名 + /models 在列，账号试用门为账号级非模型级）；ling-3.0-flash-free 暂报 cannot be served（仍在 /models，观察项）） （2026-09-24 复查：ling-3.0-flash-free 连续两日报 no_available_channel（仍在 /models，持续观察）；其余 44 款免费列表无变化） （2026-10-10 复查：免费面 44 款；ling-3.0-flash-free 连续三轮 no_available_channel，移出 models；glm-4.7-flash-free / kimi-for-coding-free / k2.6-code-preview-free / qwen3.6-plus-preview-free / coding-minimax-m3-free / xiaomi-mimo-v2.5(-pro)-free 收入 models；本账号 10 次试用已耗尽（HTTP 200 但回试用提示、0 token），充值后恢复） （2026-10-15 复查：/models 免费命名 51 款：coding-glm-5.3-flash-free 上新收录（实测撞试用门，计费未验）；ling-3.0-flash-free 复上 /models 但实测仍 cannot be served，维持不收录；meta-llama 系 5 款 :free 与 mistral-7b :free 同报 cannot be served，不收录；本账号试用额度未恢复（默认款实测 200 回防滥用提示、0 token），免费列表 43→44） （2026-11-03 复查：17 款 delisted 移除（hy3-free、laguna-s/xs-2.1-free、ling-3.0-tiny/-flash-free、minimax-m2.7-free、nemotron-3-nano-30b-a3b/-nano-12b-v2-vl/-nano-9b-v2/-super-120b-a12b-free、union-alpha-free、xiaomi-mimo-v2-omni/-v2-pro/-v2.5/-v2.5-pro-free、qwen3.8-flash/-max-free），新增 5 款实测出字（gemma-4-31b-it-free、gemma-4-26b-a4b-it-free、xing4.0-29b-a4b-free、flint-v1.0-free、nemotron-3.5-super-vl-free），47→35 款；gpt-oss-20b-free 已 retired（404），coding-glm-5-free / coding-glm-5.3-free / glm-4.7-flash-free 复测出字）",
+        "note": "51 款 -free（2026-08-28 live 同步，models 收录前 24）；未充值账号仅 10 次试用，充值后免费模型不再计次；国内网络需代理。 （2026-09-09 复查：免费列表扩至 54 款，含 gemini-3.8-flash-free / gpt-image-2-free 等新款） （2026-09-16 复查：minimax-m3-free 下线，免费列表 54→53）（2026-09-18 复查：live /models 对齐——gemini-3-flash-preview-free、gemini-3.5/3.6/3.7/3.8-flash-free、gemma-4-26b/31b-free、gpt-4.1(-mini/-nano)-free、gpt-4o-free、gpt-5.5-free、gpt-image-2-free、gpt-oss-20b-free 共 14 款已从上游下架移除；新上 agents-a1-free / intern-s2-free / union-alpha-free（按 -free 命名收录，计费未实测）。免费列表 53→42。） （2026-09-22 复查：mimo v2.6 系转免费——xiaomi-mimo-v2.6-flash-free / xiaomi-mimo-v2.6-pro-free 上新收录（-free 命名 + /models 在列，账号试用门为账号级非模型级）；ling-3.0-flash-free 暂报 cannot be served（仍在 /models，观察项）） （2026-09-24 复查：ling-3.0-flash-free 连续两日报 no_available_channel（仍在 /models，持续观察）；其余 44 款免费列表无变化） （2026-10-10 复查：免费面 44 款；ling-3.0-flash-free 连续三轮 no_available_channel，移出 models；glm-4.7-flash-free / kimi-for-coding-free / k2.6-code-preview-free / qwen3.6-plus-preview-free / coding-minimax-m3-free / xiaomi-mimo-v2.5(-pro)-free 收入 models；本账号 10 次试用已耗尽（HTTP 200 但回试用提示、0 token），充值后恢复） （2026-10-15 复查：/models 免费命名 51 款：coding-glm-5.3-flash-free 上新收录（实测撞试用门，计费未验）；ling-3.0-flash-free 复上 /models 但实测仍 cannot be served，维持不收录；meta-llama 系 5 款 :free 与 mistral-7b :free 同报 cannot be served，不收录；本账号试用额度未恢复（默认款实测 200 回防滥用提示、0 token），免费列表 43→44） （2026-11-03 复查：17 款 delisted 移除（hy3-free、laguna-s/xs-2.1-free、ling-3.0-tiny/-flash-free、minimax-m2.7-free、nemotron-3-nano-30b-a3b/-nano-12b-v2-vl/-nano-9b-v2/-super-120b-a12b-free、union-alpha-free、xiaomi-mimo-v2-omni/-v2-pro/-v2.5/-v2.5-pro-free、qwen3.8-flash/-max-free），新增 5 款实测出字（gemma-4-31b-it-free、gemma-4-26b-a4b-it-free、xing4.0-29b-a4b-free、flint-v1.0-free、nemotron-3.5-super-vl-free），47→35 款；gpt-oss-20b-free 已 retired（404），coding-glm-5-free / coding-glm-5.3-free / glm-4.7-flash-free 复测出字） （2026-11-11 目录同步：新增 11 款免费模型 coding-glm-4.6-free、coding-glm-4.7-free、coding-glm-5-free、coding-glm-5-turbo-free、coding-glm-5.1-free、coding-minimax-m2-free、coding-minimax-m2.1-free、coding-minimax-m2.5-free、coding-minimax-m2.7-free、mimo-v2-flash-free、nemotron-3.5-content-safety-free）",
         "defaultModel": "coding-glm-5.3-free",
         "models": [
           {
@@ -336,6 +380,46 @@
             "id": "nemotron-3.5-super-vl-free",
             "name": "nemotron-3.5-super-vl (free)",
             "contextWindow": 131072
+          },
+          {
+            "id": "coding-glm-4.6-free",
+            "name": "coding-glm-4.6 (free)"
+          },
+          {
+            "id": "coding-glm-4.7-free",
+            "name": "coding-glm-4.7 (free)"
+          },
+          {
+            "id": "coding-glm-5-free",
+            "name": "coding-glm-5 (free)"
+          },
+          {
+            "id": "coding-glm-5-turbo-free",
+            "name": "coding-glm-5-turbo (free)"
+          },
+          {
+            "id": "coding-glm-5.1-free",
+            "name": "coding-glm-5.1 (free)"
+          },
+          {
+            "id": "coding-minimax-m2-free",
+            "name": "coding-minimax-m2 (free)"
+          },
+          {
+            "id": "coding-minimax-m2.1-free",
+            "name": "coding-minimax-m2.1 (free)"
+          },
+          {
+            "id": "coding-minimax-m2.5-free",
+            "name": "coding-minimax-m2.5 (free)"
+          },
+          {
+            "id": "coding-minimax-m2.7-free",
+            "name": "coding-minimax-m2.7 (free)"
+          },
+          {
+            "id": "mimo-v2-flash-free",
+            "name": "mimo-v2-flash (free)"
           }
         ]
       }
@@ -392,11 +476,14 @@
           "nvidia/nemotron-3.5-lightning-30b-a3b",
           "z-ai/glm-5.3-flash",
           "openai/gpt-oss-20b",
-          "poolside/laguna-xs-2.1"
+          "poolside/laguna-xs-2.1",
+          "meta/muse-glimmer-30b",
+          "nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "stepfun-ai/step-5-preview"
         ],
         "keyRef": "FREEROUTE_NVIDIA_API_KEY",
         "name": "NVIDIA NIM",
-        "note": "3 款实测稳定（2026-08-28 复核；列表在列≠已开通——kimi-k2.6 未开通、deepseek 系挂起，不收录）。开发者免费额度约 1000 次/账号，国内可直连。 （2026-09-09 复查：minimaxai/minimax-m3 未见于 /models，保留声明待确认） （2026-09-16 复查：moonshotai/kimi-k3 与 nvidia/nemotron-3-super-120b-a12b 仍在列；minimaxai/minimax-m3 已下线） （2026-10-10 复查：glm-5.3 / glm-5.3-flash / gpt-oss-20b / laguna-xs-2.1 / nemotron-3-ultra-550b / nemotron-3.5-lightning-30b 实测 200 收入；deepseek-v4.1-flash 与 gemma-4-31b-it 两轮超时、nemotron-nano-3 404、nano-omni 503 不收录；kimi-k3 当日 3 连超时观察（90s 仍无首字），默认模型切换为 nemotron-3-super） （2026-10-15 复查：nemotron-3-super（默认）/ nemotron-3-ultra / glm-5.3-flash 实测 200；kimi-k3 再度 75s 超时无首字（连续两轮），维持收录观察；/models 无增删） （2026-11-03 复查：z-ai/glm-5.3 已从 /models 下架移除；nvidia/nemotron-3-nano-30b-a3b 返回 410 EOL（2026-09-01 停用）；带 Key 实测多条返回 404「Function ... not found for account」——NIM 账号侧 function 映射失效，需重新授权后复验，本轮维持现有免费清单）",
+        "note": "3 款实测稳定（2026-08-28 复核；列表在列≠已开通——kimi-k2.6 未开通、deepseek 系挂起，不收录）。开发者免费额度约 1000 次/账号，国内可直连。 （2026-09-09 复查：minimaxai/minimax-m3 未见于 /models，保留声明待确认） （2026-09-16 复查：moonshotai/kimi-k3 与 nvidia/nemotron-3-super-120b-a12b 仍在列；minimaxai/minimax-m3 已下线） （2026-10-10 复查：glm-5.3 / glm-5.3-flash / gpt-oss-20b / laguna-xs-2.1 / nemotron-3-ultra-550b / nemotron-3.5-lightning-30b 实测 200 收入；deepseek-v4.1-flash 与 gemma-4-31b-it 两轮超时、nemotron-nano-3 404、nano-omni 503 不收录；kimi-k3 当日 3 连超时观察（90s 仍无首字），默认模型切换为 nemotron-3-super） （2026-10-15 复查：nemotron-3-super（默认）/ nemotron-3-ultra / glm-5.3-flash 实测 200；kimi-k3 再度 75s 超时无首字（连续两轮），维持收录观察；/models 无增删） （2026-11-03 复查：z-ai/glm-5.3 已从 /models 下架移除；nvidia/nemotron-3-nano-30b-a3b 返回 410 EOL（2026-09-01 停用）；带 Key 实测多条返回 404「Function ... not found for account」——NIM 账号侧 function 映射失效，需重新授权后复验，本轮维持现有免费清单） （2026-11-11 目录同步：新增 3 款免费模型 meta/muse-glimmer-30b、nvidia/nemotron-3.5-super-vl-120b-a12b、stepfun-ai/step-5-preview）",
         "defaultModel": "nvidia/nemotron-3-super-120b-a12b",
         "models": [
           {
@@ -427,6 +514,25 @@
           {
             "id": "poolside/laguna-xs-2.1",
             "name": "Laguna XS 2.1",
+            "contextWindow": 262144
+          },
+          {
+            "id": "meta/muse-glimmer-30b",
+            "name": "Muse Glimmer 30B",
+            "contextWindow": 131072
+          },
+          {
+            "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+            "name": "Nemotron 3.5 Super VL 120B",
+            "contextWindow": 1048576,
+            "inputModalities": [
+              "text",
+              "image"
+            ]
+          },
+          {
+            "id": "stepfun-ai/step-5-preview",
+            "name": "Step 5 Preview",
             "contextWindow": 262144
           }
         ]
